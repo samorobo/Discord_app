@@ -1,6 +1,6 @@
 const ServerIdPage = () => {
     return (
-        <div className="bg-green-500">Server ID Page</div>
+        <div className="text-black">Server ID Page</div>
     )
 }
 
