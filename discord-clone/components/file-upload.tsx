@@ -14,7 +14,7 @@ interface FileUploadProps {
 export const FileUpload = ({
     onChange,
     value,
-    endpoint
+    endpoint,
 }: FileUploadProps ) => {
 
     const fileType = value?.split(".").pop();

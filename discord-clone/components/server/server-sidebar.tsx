@@ -1,13 +1,11 @@
-"use client"
-
-
-import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { ChannelType } from "@prisma/client";
-import { useRouter } from "next/router";
+import { Router } from "lucide-react";
+import { ServerHeader } from "./server-header";
+import { currentProfile } from "@/lib/current-profile";
 
-interface ServerSideProps{
+interface ServerSideProps  {
     serverId: string;
 }
 
@@ -15,11 +13,11 @@ export const ServerSidebar = async ({
     serverId
 }: ServerSideProps) => {
     const profile = await currentProfile()
-    const router = useRouter()
+    
 
     if(!profile){
-        //return redirect("/")
-        return router.push("/")
+         return redirect("/")
+        //return router.push("/")
     }
 
     const server = await db.server.findUnique({
@@ -46,18 +44,22 @@ export const ServerSidebar = async ({
     const textChannels = server?.channels.filter((channel) => channel.type === ChannelType.TEXT)
     const audioChannels = server?.channels.filter((channel) => channel.type === ChannelType.AUDIO)
     const videoChannels = server?.channels.filter((channel) => channel.type === ChannelType.VIDEO)
-    //This is used to filter ooyt our own profile hence the "!=="
+    //This is used to filter out our own profile hence the "!=="
     const member = server?.members.filter((member) => member.profileId !== profile.id)
 
-    // if(!server){
-    //     return redirect("/")
-    // }
+    //Ensure to comback later to fix this error in this IF statement that 
+    //causing Throtting navigation error to enter a loop
+
+
+    if(!server){
+        return redirect("/")
+    }
 
     const role = server?.members.find((member) => member.profileId === profile.id)?.role
 
     return (
-        <div className="flex flex-col h-full text-primary w-full dark:bg-[#2B2D31] bg-[#F2F3F5]">
-            Server sidebar Components
+        <div className="flex flex-col h-full  text-primary w-full dark:bg-[#2B2D31] bg-[#F2F3F5]">
+            <ServerHeader server={server} role={role} />
         </div>
     )
 }

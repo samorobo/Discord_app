@@ -5,7 +5,7 @@ import { db } from "@/lib/db"
 import { NavigationAction } from "./navigation-action";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { NavigationItem } from "@/components/navigation-item";
+import { NavigationItem } from "@/components/navigation/navigation-item";
 import { ModeToggle } from "@/components/mode-toggle";
 import { UserButton } from "@clerk/nextjs";
 
